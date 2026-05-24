@@ -1,0 +1,388 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* ── Family palette ───────────────────────────────────────────── */
+  --warm-canvas:      #fbfaf9;
+  --stone-surface:    #f2f0ed;
+  --parchment-card:   #f8f7f4;
+  --pill-cream:       #f6f4ef;
+
+  --graphite:         #474645;
+  --charcoal-primary: #343433;
+  --midnight:         #121212;
+  --midnight-hover:   #343433;
+  --obsidian:         #000000;
+  --ash:              #848281;
+  --fog:              #c6c6c6;
+  --smoke:            #a7a7a7;
+  --pepper:           #282624;
+
+  /* Illustration / accent palette — restricted usage */
+  --ember-orange:     #ff3e00;   /* text links + illustration only */
+  --meadow-green:     #00ca48;
+  --sky-blue:         #0090ff;
+  --sunburst-yellow:  #ffbb26;
+  --deep-amber:       #d48f00;
+  --ocean-blue:       #0086fc;
+  --ice-blue:         #64c6ff;
+  --spearmint:        #00c978;
+  --flamingo:         #ff58ae;
+  --violet-pop:       #9f4fff;
+  --coral-red:        #ff2b3a;
+  --valid-green:      #00c454;
+
+  /* ── Semantic aliases ─────────────────────────────────────────── */
+  --bg:             var(--warm-canvas);
+  --surface:        #ffffff;
+  --surface-alt:    var(--parchment-card);
+  --surface-hover:  var(--stone-surface);
+  --surface-sunken: var(--stone-surface);
+
+  --border:         var(--stone-surface);
+  --border-hover:   var(--fog);
+  --border-strong:  var(--midnight);
+
+  --text:           var(--graphite);
+  --text-secondary: var(--graphite);
+  --text-tertiary:  var(--ash);
+  --text-inverse:   #ffffff;
+  --text-heading:   var(--charcoal-primary);
+
+  /* Primary CTA = pink pill (Flamingo). `--accent` kept for legacy refs. */
+  --pink-primary:       #ff58ae;
+  --pink-primary-hover: #ff3d9e;
+  --accent:        var(--pink-primary);
+  --accent-hover:  var(--pink-primary-hover);
+
+  /* Decorative accent slots (mapped to Family illustration colors) */
+  --accent-yellow: var(--sunburst-yellow);
+  --accent-purple: var(--violet-pop);
+  --accent-pink:   var(--flamingo);
+  --accent-blue:   var(--sky-blue);
+  --accent-green:  var(--meadow-green);
+
+  --success: var(--valid-green);
+  --error:   var(--coral-red);
+  --warning: var(--sunburst-yellow);
+  --info:    var(--sky-blue);
+
+  --bg-rgb:     251, 250, 249;
+  --accent-rgb: 18, 18, 18;
+  --text-rgb:   71, 70, 69;
+
+  /* Elevation — flat: inset stone border, no drop shadow on cards */
+  --shadow-subtle: 0 0 0 1px var(--stone-surface) inset;
+  --shadow-sm: rgba(0, 0, 0, 0.04) 0px 1px 6px 0px, rgba(0, 0, 0, 0.05) 0px 0px 24px 0px;
+  --shadow-md: rgba(0, 0, 0, 0.06) 0px 2px 10px 0px;
+  --shadow-lg: rgba(0, 0, 0, 0.15) 0px 0px 24px 0px;
+
+  /* Pill button has no shadow — Family CTAs sit flat */
+  --shadow-candy: none;
+  --shadow-candy-hover: none;
+
+  /* Radii — Family uses pills + 10px cards + 24px large cards */
+  --radius-button:  9999px;
+  --radius-pill:    9999px;
+  --radius-input:   10px;
+  --radius-card:    10px;
+  --radius-card-lg: 24px;
+  --radius-tag:     6px;
+  --radius-icon:    40px;
+  --radius-illustration: 72px;
+
+  --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-out-back:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-spring:    cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  line-height: 1.47;
+  letter-spacing: -0.012em;
+}
+
+@media (min-width: 768px) {
+  body { font-size: 16px; line-height: 1.5; }
+}
+
+/* Display headings use the Family substitute (Fraunces 500) */
+h1, h2, h3 {
+  font-family: 'Fraunces', 'Inter', 'Noto Sans SC', serif;
+  font-weight: 500;
+  letter-spacing: -0.031em;
+  color: var(--text-heading);
+  margin: 0;
+}
+
+button { font-family: inherit; letter-spacing: -0.012em; }
+
+@layer components {
+
+  /* ── Primary CTA: pink pill (Flamingo) with solid drop shadow ─── */
+  .btn-candy {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold text-[15px];
+    background: var(--pink-primary);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--radius-pill);
+    min-height: 44px;
+    letter-spacing: -0.012em;
+    box-shadow: 0 5px 0 0 #c93f87;
+    transition: background 180ms ease, transform 120ms ease, box-shadow 120ms ease;
+    cursor: pointer;
+  }
+  .btn-candy:hover {
+    background: var(--pink-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 0 0 #c93f87;
+  }
+  .btn-candy:active {
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 0 #c93f87;
+  }
+  .btn-candy:focus-visible {
+    outline: 2px solid var(--pink-primary);
+    outline-offset: 4px;
+  }
+  .btn-candy:disabled {
+    background: var(--stone-surface);
+    color: var(--smoke);
+    box-shadow: 0 5px 0 0 var(--fog);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* ── Secondary CTA: cream pill with solid drop shadow ──────────── */
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-medium text-[15px];
+    background: var(--pill-cream);
+    color: var(--midnight);
+    border: none;
+    border-radius: var(--radius-pill);
+    min-height: 44px;
+    letter-spacing: -0.012em;
+    box-shadow: 0 5px 0 0 #d8d2c5;
+    transition: background 180ms ease, transform 120ms ease, box-shadow 120ms ease;
+    cursor: pointer;
+  }
+  .btn-outline:hover {
+    background: var(--stone-surface);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 0 0 #d8d2c5;
+  }
+  .btn-outline:active {
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 0 #d8d2c5;
+  }
+  .btn-outline:focus-visible {
+    outline: 2px solid var(--midnight);
+    outline-offset: 4px;
+  }
+
+  /* ── Ghost: text-only ────────────────────────────────────────── */
+  .btn-ghost {
+    @apply inline-flex items-center gap-1.5 px-3 py-2 font-medium text-sm;
+    background: transparent;
+    color: var(--graphite);
+    border: none;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: background 140ms, color 140ms;
+  }
+  .btn-ghost:hover {
+    background: var(--stone-surface);
+    color: var(--midnight);
+  }
+  .btn-ghost:focus-visible {
+    outline: 2px solid var(--midnight);
+    outline-offset: 2px;
+  }
+
+  /* ── Ember orange text link (rare — max 1 per viewport) ─────── */
+  .link-ember {
+    color: var(--ember-orange);
+    font-weight: 500;
+    transition: opacity 160ms;
+  }
+  .link-ember:hover { opacity: 0.8; }
+
+  /* ── Cards ───────────────────────────────────────────────────── */
+  .surface-card {
+    background: #ffffff;
+    box-shadow: var(--shadow-subtle);
+    border-radius: var(--radius-card);
+    padding: 24px;
+  }
+
+  .surface-card-cream {
+    background: var(--parchment-card);
+    border-radius: var(--radius-card);
+    padding: 24px;
+  }
+
+  .list-item {
+    @apply flex items-center gap-3.5 px-4 py-3 cursor-pointer w-full text-left;
+    background: #ffffff;
+    box-shadow: var(--shadow-subtle);
+    border-radius: var(--radius-card);
+    transition: box-shadow 180ms ease;
+  }
+  .list-item:hover {
+    box-shadow: 0 0 0 1px var(--fog) inset;
+  }
+
+  /* ── Badges / tags ───────────────────────────────────────────── */
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 text-[12px] font-medium;
+    letter-spacing: -0.012em;
+    border-radius: var(--radius-tag);
+    background: var(--stone-surface);
+    color: var(--graphite);
+    text-transform: none;
+  }
+  .badge[data-variant="green"]  { background: rgba(0,202,72,0.10);   color: #008a32; }
+  .badge[data-variant="pink"]   { background: rgba(255,88,174,0.10); color: var(--flamingo); }
+  .badge[data-variant="purple"] { background: rgba(159,79,255,0.10); color: var(--violet-pop); }
+  .badge[data-variant="yellow"] { background: rgba(255,187,38,0.16); color: var(--deep-amber); }
+  .badge[data-variant="blue"]   { background: rgba(0,144,255,0.10);  color: var(--sky-blue); }
+  .badge[data-variant="orange"] { background: rgba(255,62,0,0.10);   color: var(--ember-orange); }
+
+  /* ── Tabbar ──────────────────────────────────────────────────── */
+  .tabbar {
+    @apply inline-flex gap-1 p-1 rounded-full;
+    background: var(--stone-surface);
+  }
+  .tab-btn {
+    @apply px-4 py-1.5 rounded-full text-sm font-medium cursor-pointer;
+    color: var(--graphite);
+    background: transparent;
+    border: none;
+    transition: color 140ms, background 140ms;
+  }
+  .tab-btn[data-active="true"] {
+    background: #ffffff;
+    color: var(--midnight);
+    box-shadow: var(--shadow-subtle);
+  }
+  .tab-btn:hover:not([data-active="true"]) { color: var(--midnight); }
+
+  /* ── Illustration character (72px rounded color bubble) ─────── */
+  .character {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-illustration);
+    font-size: 44px;
+    line-height: 1;
+    user-select: none;
+  }
+  .character[data-color="orange"] { background: rgba(255,62,0,0.14); }
+  .character[data-color="green"]  { background: rgba(0,202,72,0.14); }
+  .character[data-color="blue"]   { background: rgba(0,144,255,0.14); }
+  .character[data-color="yellow"] { background: rgba(255,187,38,0.20); }
+  .character[data-color="pink"]   { background: rgba(255,88,174,0.14); }
+  .character[data-color="purple"] { background: rgba(159,79,255,0.14); }
+
+  .skeleton {
+    background: linear-gradient(90deg,
+      var(--surface-alt) 25%,
+      var(--surface-hover) 50%,
+      var(--surface-alt) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1400ms linear infinite;
+    border-radius: var(--radius-card);
+  }
+}
+
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+@keyframes scan {
+  0%   { top: 0; }
+  50%  { top: calc(100% - 4px); }
+  100% { top: 0; }
+}
+
+.scan-loader {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-card-lg);
+  background: var(--parchment-card);
+  box-shadow: var(--shadow-subtle);
+  overflow: hidden;
+}
+.scan-loader::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--ember-orange), transparent);
+  animation: scan 1600ms linear infinite;
+  z-index: 1;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-6px) rotate(-2deg); }
+}
+@keyframes float-reverse {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-4px) rotate(2deg); }
+}
+
+.float-slow    { animation: float 5.5s ease-in-out infinite; }
+.float-slower  { animation: float-reverse 7s ease-in-out infinite; }
+
+.stagger > * {
+  opacity: 0;
+  animation: fadeUp 320ms var(--ease-spring) forwards;
+}
+.stagger > *:nth-child(1) { animation-delay: 0ms; }
+.stagger > *:nth-child(2) { animation-delay: 80ms; }
+.stagger > *:nth-child(3) { animation-delay: 160ms; }
+.stagger > *:nth-child(4) { animation-delay: 240ms; }
+.stagger > *:nth-child(5) { animation-delay: 320ms; }
+.stagger > *:nth-child(6) { animation-delay: 400ms; }
+
+.scroll-snap-x {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.scroll-snap-x > * { scroll-snap-align: center; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .scan-loader::after { animation: none; opacity: 0.6; }
+}
