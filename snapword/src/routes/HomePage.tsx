@@ -6,6 +6,7 @@ import { HeroCharacters } from '../components/HeroCharacters';
 import { useToast } from '../components/Toast';
 import { getFavorites, getWordBook, getCard } from '../lib/storage';
 import { getDueCount } from '../lib/review';
+import { asset } from '../lib/asset';
 import { relativeTime } from '../lib/time';
 import { compressImageToDataUrl, isAcceptedFormat } from '../lib/image';
 import { generateSessionId } from '../lib/ids';
@@ -275,7 +276,7 @@ export function HomePage() {
           >
             <div className="flex items-center justify-center mb-4" aria-hidden="true">
               <img
-                src="/elements/feature-favorites.png"
+                src={asset('/elements/feature-favorites.png')}
                 alt=""
                 className="select-none pointer-events-none"
                 style={{ width: 96, height: 96, objectFit: 'contain' }}
@@ -309,7 +310,7 @@ function FeatureCard({
       style={{ padding: 28 }}
     >
       <img
-        src={icon}
+        src={asset(icon)}
         alt=""
         draggable={false}
         aria-hidden="true"

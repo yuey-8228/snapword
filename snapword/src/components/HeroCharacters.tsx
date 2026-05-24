@@ -1,5 +1,6 @@
 import { motion, useReducedMotion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { asset } from '../lib/asset';
 
 /**
  * Family-style hero: two big mascots flank the headline. Each mascot lives in
@@ -268,7 +269,7 @@ function MascotFrameView({
         ))}
 
         <motion.img
-          src={`/characters/${frame.id}.png`}
+          src={asset(`/characters/${frame.id}.png`)}
           alt=""
           draggable={false}
           className="absolute select-none pointer-events-none block"
@@ -396,7 +397,7 @@ function Float({
       transition={{ type: 'spring', stiffness: 80, damping: 14, delay: 0.3 + float.delay }}
     >
       <motion.img
-        src={float.src}
+        src={asset(float.src)}
         alt=""
         draggable={false}
         className="w-full h-full block"
